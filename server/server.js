@@ -6,6 +6,6 @@ const router = require('./router')
 const path = require("path");
 
 app.use(express.json())
-app.use('/', router)
+app.use('/api', router)
 
 app.listen(3000, () => console.log(`start listening on port : ${3000}`));
