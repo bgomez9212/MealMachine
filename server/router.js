@@ -11,5 +11,6 @@ router.post('/savedIngredients', controller.addIngredients)
 router.get('/savedIngredients', controller.getIngredients)
 router.delete('/savedIngredients', controller.deleteIngredients)
 router.delete('/savedRecipes', controller.deleteRecipes)
-
+router.get('/recipesByIngredients', controller.getRecipesByIngredients)
+router.get('/recipe', controller.getRecipe)
 module.exports = router;

@@ -1,141 +1,49 @@
 import { useState, useEffect } from 'react';
+import Modal from '../components/Modal.jsx'
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 
-function Homepage( { loader, ingredientsList }) {
-  const [dinners, setDinners] = useState([]);
-  const [lunches, setLunches] = useState([]);
-  const [breakfast, setBreakfast] = useState([]);
-
-  useEffect(() => {
-    axios.get('/api/dinners', {
-      params: {
-        ingredients: ingredientsList
-      }
-    })
-      .then((results) => setDinners(results.data))
-      .catch((err) => console.log(err))
-  },[ingredientsList])
-
-
-  useEffect(() => {
-    axios.get('/api/lunches')
-      .then((results) => setLunches(results.data))
-      .catch((err) => console.log(err))
-  }, [])
-
-  useEffect(() => {
-    axios.get('/api/breakfast')
-      .then((results) => setBreakfast(results.data))
-      .catch((err) => console.log(err))
-  }, [])
-
-  const addRecipe = function(recipe) {
-    recipe = JSON.parse(recipe)
-    const {id, title, image, imageType} = recipe
-    axios.post('/api/savedRecipes', {
-      params: {
-        id: id,
-        title: title,
-        image: image,
-        imageType: imageType
-      }
-    })
-    loader()
-  }
-
+function Homepage({ loader, recipeList }) {
+  const [modalVisibility, setModalVisibility] = useState(false)
   return (
     <div>
-      <h1 style={{'textAlign': 'center'}}>DINNERS</h1>
+      <h1 style={{'textAlign': 'center'}}>WHAT CAN YOU MAKE?</h1>
       <div className="homepage-row">
-        {dinners.slice(0, 3).map((dinner) => (
-          <div className='dishcard' key={dinner.id}>
-            <img src={dinner.image}/>
+        {recipeList.map((recipe) => (
+          <div className='dishcard' key={recipe.id}>
+            <img src={recipe.image}/>
             <section>
-              <h3>{dinner.title}</h3>
+              <h3>{recipe.title}</h3>
+              <div className='missing-ingredients'>
+                <p>{`Number of Missing Ingredients: ${recipe.missedIngredientCount}`}</p>
+                <button
+                  value={JSON.stringify(recipe.missedIngredients)}
+                  onClick={() => setModalVisibility(true)}
+                >Show Missing Ingredients
+                </button>
+              </div>
               <div className='card-btns'>
-                <a href='#'>Show Recipe</a>
-                <button value={JSON.stringify(dinner)} onClick={(e)=>addRecipe(e.target.value)}>Save Recipe</button>
+                <Link to={`/recipe/${recipe.id}`}>Show Recipe</Link>
+                <button value={JSON.stringify(recipe)}>Save Recipe</button>
               </div>
             </section>
+            {modalVisibility &&
+            <div className='modal'>
+              <div className='missing-ingredient-modal'>
+              <h1>MISSING INGREDIENTS</h1>
+              {recipe.missedIngredients.map((ingredient) => (
+                <div className='ingredient' key={ingredient.key}>
+                  <p>{ingredient.name}</p>
+                  <button value={ingredient.name}>{`Add ${ingredient.name} to Grocery List`}</button>
+                </div>
+                  ))}
+              <button onClick={() => setModalVisibility(false)}>Close</button>
+              </div>
+            </div>}
           </div>
         ))}
-      </div>
-      <div className="homepage-row">
-        {dinners.slice(3, 6).map((dinner) => (
-            <div className='dishcard' key={dinner.id}>
-              <img src={dinner.image}/>
-              <section>
-                <h3>{dinner.title}</h3>
-                <div className='card-btns'>
-                  <a href='#'>Show Recipe</a>
-                  <button value={JSON.stringify(dinner)} onClick={(e)=>addRecipe(e.target.value)}>Save Recipe</button>
-                </div>
-              </section>
-            </div>
-          ))}
-      </div>
-
-      <h1 style={{'textAlign': 'center'}}>LUNCHES</h1>
-      <div className="homepage-row">
-        {lunches.slice(0, 3).map((dinner) => (
-            <div className='dishcard' key={dinner.id}>
-              <img src={dinner.image}/>
-              <section>
-                <h3>{dinner.title}</h3>
-                <div className='card-btns'>
-                  <a href='#'>Show Recipe</a>
-                  <button value={JSON.stringify(dinner)} onClick={(e)=>addRecipe(e.target.value)}>Save Recipe</button>
-                </div>
-              </section>
-            </div>
-          ))}
-      </div>
-      <div className="homepage-row">
-        {lunches.slice(3, 6).map((dinner) => (
-            <div className='dishcard' key={dinner.id}>
-              <img src={dinner.image}/>
-              <section>
-                <h3>{dinner.title}</h3>
-                <div className='card-btns'>
-                  <a href='#'>Show Recipe</a>
-                  <button value={JSON.stringify(dinner)} onClick={(e)=>addRecipe(e.target.value)}>Save Recipe</button>
-                </div>
-              </section>
-            </div>
-          ))}
-      </div>
-
-      <h1 style={{'textAlign': 'center'}}>BREAKFAST</h1>
-      <div className="homepage-row">
-        {breakfast.slice(0, 3).map((dinner) => (
-            <div className='dishcard' key={dinner.id}>
-              <img src={dinner.image}/>
-              <section>
-                <h3>{dinner.title}</h3>
-                <div className='card-btns'>
-                  <a href='#'>Show Recipe</a>
-                  <button value={JSON.stringify(dinner)} onClick={(e)=>addRecipe(e.target.value)}>Save Recipe</button>
-                </div>
-              </section>
-            </div>
-          ))}
-      </div>
-      <div className="homepage-row">
-        {breakfast.slice(3, 6).map((dinner) => (
-            <div className='dishcard' key={dinner.id}>
-              <img src={dinner.image}/>
-              <section>
-                <h3>{dinner.title}</h3>
-                <div className='card-btns'>
-                  <a href='#'>Show Recipe</a>
-                  <button value={JSON.stringify(dinner)} onClick={(e)=>addRecipe(e.target.value)}>Save Recipe</button>
-                </div>
-              </section>
-            </div>
-          ))}
       </div>
     </div>
   )
 }
-
 export default Homepage

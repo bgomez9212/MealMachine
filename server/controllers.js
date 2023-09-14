@@ -4,13 +4,6 @@ const { Recipe, Ingredient } = require('./db/database.js')
 
 module.exports = {
   getDinners: (req, res) => {
-    let queryString = ''
-    if (req.query.ingredients) {
-        req.query.ingredients.forEach((ingredientObj) => {
-            queryString += ingredientObj.name+','
-        })
-    }
-    console.log(queryString)
     // axios.get(`https://api.spoonacular.com/recipes/random?number=6&tags=dinner&apiKey=${API}`)
     //   .then(results => res.status(200).send(results.data.recipes))
     res.send([
@@ -185,6 +178,8 @@ module.exports = {
     ])
   },
   getLunches: (req, res) => {
+    // axios.get(`https://api.spoonacular.com/recipes/random?number=6&tags=lunch&apiKey=${API}`)
+    //   .then(results => res.status(200).send(results.data.recipes))
     res.send([
         {
             "id": 782585,
@@ -369,6 +364,8 @@ module.exports = {
     ])
   },
   getBreakfast: (req, res) => {
+    // axios.get(`https://api.spoonacular.com/recipes/random?number=6&tags=breakfast&apiKey=${API}`)
+    //   .then(results => res.status(200).send(results.data.recipes))
     res.send([
         {
             "id": 715497,
@@ -589,5 +586,1174 @@ module.exports = {
         .deleteOne({id: req.body.id})
         .then(() => res.status(204).send())
         .catch(() => console.log('unable to delete'))
+  },
+  getRecipesByIngredients: (req, res) => {
+    let queryString = '';
+    if (req.query.ingredients) {
+        req.query.ingredients.forEach((ingredientObj) => {
+            queryString += ingredientObj.name+','
+        })
+    }
+    // axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${API}&ignorePantry=true&ingredients=${queryString}&ranking=1`)
+    //   .then((results) => res.send(results))
+    //   .catch((err) => console.log(err))
+    res.send([
+        {
+            "id": 653810,
+            "title": "Orange Banana Muffins With Pistachios",
+            "image": "https://spoonacular.com/recipeImages/653810-312x231.jpg",
+            "imageType": "jpg",
+            "usedIngredientCount": 3,
+            "missedIngredientCount": 4,
+            "missedIngredients": [
+                {
+                    "id": 19912,
+                    "amount": 0.5,
+                    "unit": "cup",
+                    "unitLong": "cups",
+                    "unitShort": "cup",
+                    "aisle": "Ethnic Foods",
+                    "name": "agave syrup",
+                    "original": "1/2 cup agave syrup",
+                    "originalName": "agave syrup",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/agave.png"
+                },
+                {
+                    "id": 18369,
+                    "amount": 2.0,
+                    "unit": "tablespoons",
+                    "unitLong": "tablespoons",
+                    "unitShort": "Tbsp",
+                    "aisle": "Baking",
+                    "name": "baking powder",
+                    "original": "2 tablespoons baking powder",
+                    "originalName": "baking powder",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/white-powder.jpg"
+                },
+                {
+                    "id": 12151,
+                    "amount": 0.25,
+                    "unit": "cup",
+                    "unitLong": "cups",
+                    "unitShort": "cup",
+                    "aisle": "Savory Snacks",
+                    "name": "pistachios",
+                    "original": "1/4 cup chopped pistachios",
+                    "originalName": "chopped pistachios",
+                    "meta": [
+                        "chopped"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/pistachios.jpg"
+                },
+                {
+                    "id": 8402,
+                    "amount": 2.0,
+                    "unit": "cups",
+                    "unitLong": "cups",
+                    "unitShort": "cup",
+                    "aisle": "Cereal",
+                    "name": "cooking oats",
+                    "original": "2 cups quick cooking oats",
+                    "originalName": "quick cooking oats",
+                    "meta": [
+                        "quick"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/rolled-oats.jpg"
+                }
+            ],
+            "usedIngredients": [
+                {
+                    "id": 9040,
+                    "amount": 3.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Produce",
+                    "name": "bananas",
+                    "original": "3 bananas, mashed",
+                    "originalName": "bananas, mashed",
+                    "meta": [
+                        "mashed"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/bananas.jpg"
+                },
+                {
+                    "id": 1123,
+                    "amount": 2.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "eggs",
+                    "original": "2 eggs",
+                    "originalName": "eggs",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/egg.png"
+                },
+                {
+                    "id": 9200,
+                    "amount": 2.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Produce",
+                    "name": "oranges",
+                    "original": "2 oranges",
+                    "originalName": "oranges",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/orange.png"
+                }
+            ],
+            "unusedIngredients": [
+                {
+                    "id": 9003,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "apple",
+                    "original": "apple",
+                    "originalName": "apple",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/apple.jpg"
+                }
+            ],
+            "likes": 1
+        },
+        {
+            "id": 634213,
+            "title": "Banana, Cranberry and Apple Bread",
+            "image": "https://spoonacular.com/recipeImages/634213-312x231.jpg",
+            "imageType": "jpg",
+            "usedIngredientCount": 3,
+            "missedIngredientCount": 5,
+            "missedIngredients": [
+                {
+                    "id": 18369,
+                    "amount": 1.5,
+                    "unit": "teaspoons",
+                    "unitLong": "teaspoons",
+                    "unitShort": "tsp",
+                    "aisle": "Baking",
+                    "name": "baking powder",
+                    "original": "1 1/2 teaspoons baking powder",
+                    "originalName": "baking powder",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/white-powder.jpg"
+                },
+                {
+                    "id": 18372,
+                    "amount": 1.5,
+                    "unit": "teaspoons",
+                    "unitLong": "teaspoons",
+                    "unitShort": "tsp",
+                    "aisle": "Baking",
+                    "name": "baking soda",
+                    "original": "1 1/2 teaspoons baking soda",
+                    "originalName": "baking soda",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/white-powder.jpg"
+                },
+                {
+                    "id": 9078,
+                    "amount": 1.0,
+                    "unit": "cup",
+                    "unitLong": "cup",
+                    "unitShort": "cup",
+                    "aisle": "Produce",
+                    "name": "cranberry - 125g",
+                    "original": "1 cup dried cranberry - 125g",
+                    "originalName": "dried cranberry - 125g",
+                    "meta": [
+                        "dried"
+                    ],
+                    "extendedName": "dried cranberry - 125g",
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/cranberries.jpg"
+                },
+                {
+                    "id": 1077,
+                    "amount": 0.25,
+                    "unit": "cup",
+                    "unitLong": "cups",
+                    "unitShort": "cup",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "milk",
+                    "original": "1/4 cup milk",
+                    "originalName": "milk",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/milk.png"
+                },
+                {
+                    "id": 1052050,
+                    "amount": 1.0,
+                    "unit": "teaspoon",
+                    "unitLong": "teaspoon",
+                    "unitShort": "tsp",
+                    "aisle": "Baking",
+                    "name": "vanilla",
+                    "original": "1 teaspoon Vanilla",
+                    "originalName": "Vanilla",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/vanilla.jpg"
+                }
+            ],
+            "usedIngredients": [
+                {
+                    "id": 9040,
+                    "amount": 3.0,
+                    "unit": "large",
+                    "unitLong": "larges",
+                    "unitShort": "large",
+                    "aisle": "Produce",
+                    "name": "bananas - - 235g on",
+                    "original": "3 large bananas – mashed - 235g skinless on",
+                    "originalName": "bananas – mashed - 235g skinless on",
+                    "meta": [
+                        "skinless",
+                        "mashed"
+                    ],
+                    "extendedName": "skinless bananas - - 235g on",
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/bananas.jpg"
+                },
+                {
+                    "id": 1123,
+                    "amount": 2.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "eggs",
+                    "original": "2 Eggs",
+                    "originalName": "Eggs",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/egg.png"
+                },
+                {
+                    "id": 1069003,
+                    "amount": 1.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Produce",
+                    "name": "apple",
+                    "original": "1 apple – grated (green apple)",
+                    "originalName": "apple – grated (green apple)",
+                    "meta": [
+                        "green",
+                        "grated",
+                        "( apple)"
+                    ],
+                    "extendedName": "green apple",
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/grannysmith-apple.png"
+                }
+            ],
+            "unusedIngredients": [
+                {
+                    "id": 9200,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "orange",
+                    "original": "orange",
+                    "originalName": "orange",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/orange.png"
+                }
+            ],
+            "likes": 18
+        },
+        {
+            "id": 645514,
+            "title": "Green Salad With Fresh Orange Juice Dressing",
+            "image": "https://spoonacular.com/recipeImages/645514-312x231.jpg",
+            "imageType": "jpg",
+            "usedIngredientCount": 3,
+            "missedIngredientCount": 5,
+            "missedIngredients": [
+                {
+                    "id": 11124,
+                    "amount": 0.5,
+                    "unit": "cup",
+                    "unitLong": "cups",
+                    "unitShort": "cup",
+                    "aisle": "Produce",
+                    "name": "carrot",
+                    "original": "1/2 cup shredded carrot",
+                    "originalName": "shredded carrot",
+                    "meta": [
+                        "shredded"
+                    ],
+                    "extendedName": "shredded carrot",
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/sliced-carrot.png"
+                },
+                {
+                    "id": 11603,
+                    "amount": 0.5,
+                    "unit": "cup",
+                    "unitLong": "cups",
+                    "unitShort": "cup",
+                    "aisle": "Produce",
+                    "name": "jicama",
+                    "original": "1/2 cup jicama",
+                    "originalName": "jicama",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/jicama.jpg"
+                },
+                {
+                    "id": 9159,
+                    "amount": 1.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Produce",
+                    "name": "lime",
+                    "original": "1 lime",
+                    "originalName": "lime",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/lime.jpg"
+                },
+                {
+                    "id": 10111251,
+                    "amount": 1.0,
+                    "unit": "head",
+                    "unitLong": "head",
+                    "unitShort": "head",
+                    "aisle": "Produce",
+                    "name": "romaine lettuce",
+                    "original": "1 head romaine lettuce",
+                    "originalName": "romaine lettuce",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/romaine.jpg"
+                },
+                {
+                    "id": 11529,
+                    "amount": 1.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Produce",
+                    "name": "tomato",
+                    "original": "1 tomato",
+                    "originalName": "tomato",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/tomato.png"
+                }
+            ],
+            "usedIngredients": [
+                {
+                    "id": 1129,
+                    "amount": 2.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "hardboiled eggs",
+                    "original": "2 hard boiled eggs",
+                    "originalName": "hard boiled eggs",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/hard-boiled-egg.png"
+                },
+                {
+                    "id": 1069003,
+                    "amount": 1.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Produce",
+                    "name": "apple",
+                    "original": "1 green apple,wash and diced",
+                    "originalName": "green apple,wash and diced",
+                    "meta": [
+                        "diced",
+                        "green"
+                    ],
+                    "extendedName": "green diced apple",
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/grannysmith-apple.png"
+                },
+                {
+                    "id": 9200,
+                    "amount": 2.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Produce",
+                    "name": "oranges",
+                    "original": "2 fresh oranges",
+                    "originalName": "fresh oranges",
+                    "meta": [
+                        "fresh"
+                    ],
+                    "extendedName": "fresh oranges",
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/orange.png"
+                }
+            ],
+            "unusedIngredients": [
+                {
+                    "id": 9040,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "banana",
+                    "original": "banana",
+                    "originalName": "banana",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/bananas.jpg"
+                }
+            ],
+            "likes": 1
+        },
+        {
+            "id": 157514,
+            "title": "Nutella Banana Pancakes German Style",
+            "image": "https://spoonacular.com/recipeImages/157514-312x231.jpg",
+            "imageType": "jpg",
+            "usedIngredientCount": 2,
+            "missedIngredientCount": 2,
+            "missedIngredients": [
+                {
+                    "id": 1077,
+                    "amount": 400.0,
+                    "unit": "ml",
+                    "unitLong": "milliliters",
+                    "unitShort": "ml",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "milk",
+                    "original": "400ml milk",
+                    "originalName": "milk",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/milk.png"
+                },
+                {
+                    "id": 19125,
+                    "amount": 4.0,
+                    "unit": "tablespoons",
+                    "unitLong": "tablespoons",
+                    "unitShort": "Tbsp",
+                    "aisle": "Nut butters, Jams, and Honey",
+                    "name": "nutella",
+                    "original": "4 tablespoons nutella",
+                    "originalName": "nutella",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/hazelnut-chocolate-spread.jpg"
+                }
+            ],
+            "usedIngredients": [
+                {
+                    "id": 9040,
+                    "amount": 1.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Produce",
+                    "name": "banana",
+                    "original": "1 banana",
+                    "originalName": "banana",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/bananas.jpg"
+                },
+                {
+                    "id": 1123,
+                    "amount": 4.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "eggs",
+                    "original": "4 eggs",
+                    "originalName": "eggs",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/egg.png"
+                }
+            ],
+            "unusedIngredients": [
+                {
+                    "id": 9003,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "apple",
+                    "original": "apple",
+                    "originalName": "apple",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/apple.jpg"
+                },
+                {
+                    "id": 9200,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "orange",
+                    "original": "orange",
+                    "originalName": "orange",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/orange.png"
+                }
+            ],
+            "likes": 0
+        },
+        {
+            "id": 73420,
+            "title": "Apple Or Peach Strudel",
+            "image": "https://spoonacular.com/recipeImages/73420-312x231.jpg",
+            "imageType": "jpg",
+            "usedIngredientCount": 2,
+            "missedIngredientCount": 2,
+            "missedIngredients": [
+                {
+                    "id": 18369,
+                    "amount": 1.0,
+                    "unit": "tsp",
+                    "unitLong": "teaspoon",
+                    "unitShort": "tsp",
+                    "aisle": "Baking",
+                    "name": "baking powder",
+                    "original": "1 tsp baking powder",
+                    "originalName": "baking powder",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/white-powder.jpg"
+                },
+                {
+                    "id": 2010,
+                    "amount": 1.0,
+                    "unit": "tsp",
+                    "unitLong": "teaspoon",
+                    "unitShort": "tsp",
+                    "aisle": "Spices and Seasonings",
+                    "name": "cinnamon",
+                    "original": "1 tsp cinnamon",
+                    "originalName": "cinnamon",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/cinnamon.jpg"
+                }
+            ],
+            "usedIngredients": [
+                {
+                    "id": 9003,
+                    "amount": 6.0,
+                    "unit": "large",
+                    "unitLong": "larges",
+                    "unitShort": "large",
+                    "aisle": "Produce",
+                    "name": "baking apples",
+                    "original": "6 large baking apples",
+                    "originalName": "baking apples",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/apple.jpg"
+                },
+                {
+                    "id": 1123,
+                    "amount": 1.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "egg",
+                    "original": "1 egg",
+                    "originalName": "egg",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/egg.png"
+                }
+            ],
+            "unusedIngredients": [
+                {
+                    "id": 9040,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "banana",
+                    "original": "banana",
+                    "originalName": "banana",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/bananas.jpg"
+                },
+                {
+                    "id": 9200,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "orange",
+                    "original": "orange",
+                    "originalName": "orange",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/orange.png"
+                }
+            ],
+            "likes": 0
+        },
+        {
+            "id": 634986,
+            "title": "Bing's Banana Cake",
+            "image": "https://spoonacular.com/recipeImages/634986-312x231.jpg",
+            "imageType": "jpg",
+            "usedIngredientCount": 2,
+            "missedIngredientCount": 3,
+            "missedIngredients": [
+                {
+                    "id": 18369,
+                    "amount": 1.5,
+                    "unit": "teaspoons",
+                    "unitLong": "teaspoons",
+                    "unitShort": "tsp",
+                    "aisle": "Baking",
+                    "name": "baking powder",
+                    "original": "1 & 1/2 teaspoons baking powder",
+                    "originalName": "baking powder",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/white-powder.jpg"
+                },
+                {
+                    "id": 18372,
+                    "amount": 0.5,
+                    "unit": "teaspoon",
+                    "unitLong": "teaspoons",
+                    "unitShort": "tsp",
+                    "aisle": "Baking",
+                    "name": "bicarbonate of soda",
+                    "original": "1/2 teaspoon bicarbonate of soda",
+                    "originalName": "bicarbonate of soda",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/white-powder.jpg"
+                },
+                {
+                    "id": 10112155,
+                    "amount": 0.5,
+                    "unit": "cup",
+                    "unitLong": "cups",
+                    "unitShort": "cup",
+                    "aisle": "Baking",
+                    "name": "optional: walnuts",
+                    "original": "Optional: 1/2 cup finely chopped walnuts",
+                    "originalName": "Optional: finely chopped walnuts",
+                    "meta": [
+                        "finely chopped"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/walnuts.jpg"
+                }
+            ],
+            "usedIngredients": [
+                {
+                    "id": 9040,
+                    "amount": 1.0,
+                    "unit": "teaspoon",
+                    "unitLong": "teaspoon",
+                    "unitShort": "tsp",
+                    "aisle": "Produce",
+                    "name": "banana flavoured essence",
+                    "original": "1 teaspoon banana flavoured essence",
+                    "originalName": "banana flavoured essence",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/bananas.jpg"
+                },
+                {
+                    "id": 1123,
+                    "amount": 2.0,
+                    "unit": "large",
+                    "unitLong": "larges",
+                    "unitShort": "large",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "eggs",
+                    "original": "2 large eggs",
+                    "originalName": "eggs",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/egg.png"
+                }
+            ],
+            "unusedIngredients": [
+                {
+                    "id": 9003,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "apple",
+                    "original": "apple",
+                    "originalName": "apple",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/apple.jpg"
+                },
+                {
+                    "id": 9200,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "orange",
+                    "original": "orange",
+                    "originalName": "orange",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/orange.png"
+                }
+            ],
+            "likes": 6
+        },
+        {
+            "id": 634006,
+            "title": "Banana Bread",
+            "image": "https://spoonacular.com/recipeImages/634006-312x231.jpg",
+            "imageType": "jpg",
+            "usedIngredientCount": 2,
+            "missedIngredientCount": 3,
+            "missedIngredients": [
+                {
+                    "id": 1001,
+                    "amount": 1.0,
+                    "unit": "cup",
+                    "unitLong": "cup",
+                    "unitShort": "cup",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "butter",
+                    "original": "cup melted butter",
+                    "originalName": "melted butter",
+                    "meta": [
+                        "melted"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/butter-sliced.jpg"
+                },
+                {
+                    "id": 1052050,
+                    "amount": 1.0,
+                    "unit": "teaspoon",
+                    "unitLong": "teaspoon",
+                    "unitShort": "tsp",
+                    "aisle": "Baking",
+                    "name": "vanilla",
+                    "original": "1 teaspoon vanilla",
+                    "originalName": "vanilla",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/vanilla.jpg"
+                },
+                {
+                    "id": 18372,
+                    "amount": 1.0,
+                    "unit": "teaspoon",
+                    "unitLong": "teaspoon",
+                    "unitShort": "tsp",
+                    "aisle": "Baking",
+                    "name": "baking soda",
+                    "original": "1 teaspoon baking soda",
+                    "originalName": "baking soda",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/white-powder.jpg"
+                }
+            ],
+            "usedIngredients": [
+                {
+                    "id": 9040,
+                    "amount": 3.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Produce",
+                    "name": "bananas",
+                    "original": "3 ripe bananas, smashed",
+                    "originalName": "ripe bananas, smashed",
+                    "meta": [
+                        "ripe",
+                        "smashed"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/bananas.jpg"
+                },
+                {
+                    "id": 1123,
+                    "amount": 1.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "egg",
+                    "original": "1 egg, beaten",
+                    "originalName": "egg, beaten",
+                    "meta": [
+                        "beaten"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/egg.png"
+                }
+            ],
+            "unusedIngredients": [
+                {
+                    "id": 9003,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "apple",
+                    "original": "apple",
+                    "originalName": "apple",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/apple.jpg"
+                },
+                {
+                    "id": 9200,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "orange",
+                    "original": "orange",
+                    "originalName": "orange",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/orange.png"
+                }
+            ],
+            "likes": 3
+        },
+        {
+            "id": 662895,
+            "title": "Tarte aux Pommes",
+            "image": "https://spoonacular.com/recipeImages/662895-312x231.jpg",
+            "imageType": "jpg",
+            "usedIngredientCount": 2,
+            "missedIngredientCount": 3,
+            "missedIngredients": [
+                {
+                    "id": 1053,
+                    "amount": 1.0,
+                    "unit": "cup",
+                    "unitLong": "cup",
+                    "unitShort": "cup",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "heavy whipping cream",
+                    "original": "1 to 11/2 cup heavy whipping cream",
+                    "originalName": "heavy whipping cream",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/fluid-cream.jpg"
+                },
+                {
+                    "id": 18334,
+                    "amount": 1.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Refrigerated",
+                    "name": "pie crust already made and on your supermarket refrigerator section",
+                    "original": "1 pie crust already made and on your supermarket refrigerator section.",
+                    "originalName": "pie crust already made and on your supermarket refrigerator section",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/pie-crust.jpg"
+                },
+                {
+                    "id": 2050,
+                    "amount": 1.0,
+                    "unit": "teaspoon",
+                    "unitLong": "teaspoon",
+                    "unitShort": "tsp",
+                    "aisle": "Baking",
+                    "name": "vanilla extract",
+                    "original": "1 teaspoon vanilla extract",
+                    "originalName": "vanilla extract",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/vanilla-extract.jpg"
+                }
+            ],
+            "usedIngredients": [
+                {
+                    "id": 9003,
+                    "amount": 6.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Produce",
+                    "name": "apples",
+                    "original": "6 apples peeled, quartered and thinly sliced",
+                    "originalName": "apples peeled, quartered and thinly sliced",
+                    "meta": [
+                        "peeled",
+                        "thinly sliced",
+                        "quartered"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/apple.jpg"
+                },
+                {
+                    "id": 1123,
+                    "amount": 2.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "eggs",
+                    "original": "2 eggs",
+                    "originalName": "eggs",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/egg.png"
+                }
+            ],
+            "unusedIngredients": [
+                {
+                    "id": 9040,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "banana",
+                    "original": "banana",
+                    "originalName": "banana",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/bananas.jpg"
+                },
+                {
+                    "id": 9200,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "orange",
+                    "original": "orange",
+                    "originalName": "orange",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/orange.png"
+                }
+            ],
+            "likes": 2
+        },
+        {
+            "id": 634003,
+            "title": "Banana Bread Muffins, Bisquick",
+            "image": "https://spoonacular.com/recipeImages/634003-312x231.jpg",
+            "imageType": "jpg",
+            "usedIngredientCount": 2,
+            "missedIngredientCount": 3,
+            "missedIngredients": [
+                {
+                    "id": 1052050,
+                    "amount": 0.5,
+                    "unit": "teaspoon",
+                    "unitLong": "teaspoons",
+                    "unitShort": "tsp",
+                    "aisle": "Baking",
+                    "name": "vanilla",
+                    "original": "1/2 teaspoon Vanilla",
+                    "originalName": "Vanilla",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/vanilla.jpg"
+                },
+                {
+                    "id": 18010,
+                    "amount": 1.0,
+                    "unit": "cups",
+                    "unitLong": "cup",
+                    "unitShort": "cup",
+                    "aisle": "Baking",
+                    "name": "bisquick baking mix",
+                    "original": "cups Bisquick Baking Mix",
+                    "originalName": "Bisquick Baking Mix",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/buttermilk-biscuits.jpg"
+                },
+                {
+                    "id": 12135,
+                    "amount": 0.5,
+                    "unit": "cup",
+                    "unitLong": "cups",
+                    "unitShort": "cup",
+                    "aisle": "Nuts",
+                    "name": "nuts",
+                    "original": "1/2 cup Chopped Nuts",
+                    "originalName": "Chopped Nuts",
+                    "meta": [
+                        "chopped"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/nuts-mixed.jpg"
+                }
+            ],
+            "usedIngredients": [
+                {
+                    "id": 1009040,
+                    "amount": 1.5,
+                    "unit": "cups",
+                    "unitLong": "cups",
+                    "unitShort": "cup",
+                    "aisle": "Produce",
+                    "name": "bananas",
+                    "original": "1 1/2 cups Mashed Bananas Ripe, Abt 3 Lg Bananas",
+                    "originalName": "Mashed Bananas Ripe, Abt 3 Lg Bananas",
+                    "meta": [
+                        "ripe",
+                        "mashed"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/bananas.jpg"
+                },
+                {
+                    "id": 1123,
+                    "amount": 3.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "eggs",
+                    "original": "3 Eggs",
+                    "originalName": "Eggs",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/egg.png"
+                }
+            ],
+            "unusedIngredients": [
+                {
+                    "id": 9003,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "apple",
+                    "original": "apple",
+                    "originalName": "apple",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/apple.jpg"
+                },
+                {
+                    "id": 9200,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "orange",
+                    "original": "orange",
+                    "originalName": "orange",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/orange.png"
+                }
+            ],
+            "likes": 1
+        },
+        {
+            "id": 157103,
+            "title": "Apple Cinnamon Blondies",
+            "image": "https://spoonacular.com/recipeImages/157103-312x231.jpg",
+            "imageType": "jpg",
+            "usedIngredientCount": 2,
+            "missedIngredientCount": 3,
+            "missedIngredients": [
+                {
+                    "id": 1001,
+                    "amount": 0.5,
+                    "unit": "cup",
+                    "unitLong": "cups",
+                    "unitShort": "cup",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "butter",
+                    "original": "1/2 cup butter, melted",
+                    "originalName": "butter, melted",
+                    "meta": [
+                        "melted"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/butter-sliced.jpg"
+                },
+                {
+                    "id": 2010,
+                    "amount": 1.0,
+                    "unit": "tsp",
+                    "unitLong": "teaspoon",
+                    "unitShort": "tsp",
+                    "aisle": "Spices and Seasonings",
+                    "name": "cinnamon",
+                    "original": "1 tsp. cinnamon",
+                    "originalName": "cinnamon",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/cinnamon.jpg"
+                },
+                {
+                    "id": 1052050,
+                    "amount": 1.0,
+                    "unit": "tsp",
+                    "unitLong": "teaspoon",
+                    "unitShort": "tsp",
+                    "aisle": "Baking",
+                    "name": "vanilla",
+                    "original": "1 tsp. vanilla (paste or extract)",
+                    "originalName": "vanilla (paste or extract)",
+                    "meta": [
+                        "(paste or extract)"
+                    ],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/vanilla.jpg"
+                }
+            ],
+            "usedIngredients": [
+                {
+                    "id": 9003,
+                    "amount": 0.5,
+                    "unit": "cup",
+                    "unitLong": "cups",
+                    "unitShort": "cup",
+                    "aisle": "Produce",
+                    "name": "apple",
+                    "original": "1/2 cup apple, finely diced",
+                    "originalName": "apple, finely diced",
+                    "meta": [
+                        "diced",
+                        "finely"
+                    ],
+                    "extendedName": "diced apple",
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/apple.jpg"
+                },
+                {
+                    "id": 1123,
+                    "amount": 1.0,
+                    "unit": "",
+                    "unitLong": "",
+                    "unitShort": "",
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "name": "egg",
+                    "original": "1 egg",
+                    "originalName": "egg",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/egg.png"
+                }
+            ],
+            "unusedIngredients": [
+                {
+                    "id": 9040,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "banana",
+                    "original": "banana",
+                    "originalName": "banana",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/bananas.jpg"
+                },
+                {
+                    "id": 9200,
+                    "amount": 1.0,
+                    "unit": "serving",
+                    "unitLong": "serving",
+                    "unitShort": "serving",
+                    "aisle": "Produce",
+                    "name": "orange",
+                    "original": "orange",
+                    "originalName": "orange",
+                    "meta": [],
+                    "image": "https://spoonacular.com/cdn/ingredients_100x100/orange.png"
+                }
+            ],
+            "likes": 0
+        }
+    ])
+  },
+  getRecipe: (req, res) => {
+    console.log(req.query)
   }
 }
