@@ -24,7 +24,26 @@ function Homepage() {
       .then((results) => setBreakfast(results.data))
       .catch((err) => console.log(err))
   }, [])
-  console.log(breakfast)
+
+  const addRecipe = function() {
+    axios.post('/api/addRecipe', {
+      params: {
+        id: 641904,
+        title: "Easy Chicken Tandoori",
+        image: "https://spoonacular.com/recipeImages/641904-312x231.jpg",
+        imageType: "jpg"
+      }
+    })
+  }
+
+  // const addIngredient = function() {
+  //   axios.post('/api/addIngredient', {
+  //     params: {
+
+  //     }
+  //   })
+  // }
+
   return (
     <div>
       <h1 style={{'textAlign': 'center'}}>DINNERS</h1>
@@ -32,9 +51,14 @@ function Homepage() {
         {dinners.slice(0, 3).map((dinner) => (
           <div className='dishcard' key={dinner.id}>
             <img src={dinner.image}/>
-            <h3>{dinner.title}</h3>
-            <p>Description</p>
-            <a href='#'>Link to Recipe</a>
+            <section>
+              <h3>{dinner.title}</h3>
+              <p>Description</p>
+              <div className='card-btns'>
+                <a href='#'>Link to Recipe</a>
+                <button onClick={addRecipe}>Save Recipe</button>
+              </div>
+            </section>
           </div>
         ))}
       </div>

@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { API } = process.env
+const { Recipe, Ingredient } = require('./db/database.js')
 
 module.exports = {
   getDinners: (req, res) => {
@@ -10616,5 +10617,38 @@ module.exports = {
           }
       ]
   )
+  },
+  addRecipe: (req, res) => {
+    Recipe.create(req.body.params)
+      .then(() => console.log('created'))
+      .catch((err) => console.log(err))
+  },
+  getSavedRecipes: (req, res) => {
+    Recipe
+      .find({})
+      .exec()
+      .then((results) => res.send(results))
+      .catch(() => console.log('there was an error'))
+  },
+  addIngredients: (req, res) => {
+//     Ingredient.create(req.body.params)
+//       .then(() => console.log('saved'))
+    req.body.params.ingredients.forEach((ingredient) => {
+      Ingredient.create({name: ingredient})
+        .then(() => console.log('created'))
+        .catch(() => console.log('there was an error'))
+    })
+  },
+  getIngredients: (req, res) => {
+    Ingredient
+      .find({})
+      .exec()
+      .then((results) => res.send(results))
+      .catch(() => console.log('there was an error'))
+  },
+  deleteIngredients: (req, res) => {
+    console.log(req.body.id)
+    // Ingredient
+    //   .deleteOne()
   }
 }
