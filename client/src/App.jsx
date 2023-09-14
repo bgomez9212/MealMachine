@@ -13,22 +13,28 @@ function App() {
 
 
   // const [popular, setPopular] = useState([])
-  const [carouselPhotos, setCarouselPhotos] = useState([])
+  const [carouselPhotos, setCarouselPhotos] = useState([]);
+  const [ingredientsList, setIngredientsList] = useState([]);
+  const [renderer, setRenderer] = useState(true)
 
-  // useEffect(() => {
-  //   axios.get('https://api.spoonacular.com/recipes/random?number=6&tags=dinner&apiKey=433bf1970e46425f867c84140c43fc99')
-  //     .then((results) => setPopular(results.data))
-  //     .catch((err) => console.log(err))
-  // }, [])
+  useEffect(() => {
+    axios.get('/api/savedIngredients')
+      .then((results) => setIngredientsList(results.data))
+      .catch((err) => console.log(err))
+  }, [renderer])
+
+  const loader = function() {
+    setRenderer(prev => !prev)
+  }
 
   return (
     <div>
       <Navbar />
       <div className='container'>
         <Routes>
-          <Route path='/' element={<Homepage />} />
-          <Route path='/myrecipes' element={<MyRecipes/>} />
-          <Route path='/myingredients' element={<MyIngredients/>} />
+          <Route path='/' element={<Homepage ingredientsList={ingredientsList}  />} />
+          <Route path='/myrecipes' element={<MyRecipes ingredientsList={ingredientsList}/>} />
+          <Route path='/myingredients' element={<MyIngredients ingredientsList={ingredientsList} loader={loader}/>} />
           <Route path='/browse' element={<BrowseRecipes/>} />
         </Routes>
       </div>
