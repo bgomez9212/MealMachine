@@ -10,12 +10,11 @@ import Homepage from './pages/Homepage'
 
 
 function App() {
-
-
   // const [popular, setPopular] = useState([])
   const [carouselPhotos, setCarouselPhotos] = useState([]);
   const [ingredientsList, setIngredientsList] = useState([]);
-  const [renderer, setRenderer] = useState(true)
+  const [recipeList, setRecipeList] = useState([]);
+  const [renderer, setRenderer] = useState(true);
 
   useEffect(() => {
     axios.get('/api/savedIngredients')
@@ -23,8 +22,14 @@ function App() {
       .catch((err) => console.log(err))
   }, [renderer])
 
+  useEffect(() => {
+    axios.get('/api/savedRecipes')
+      .then((results) => setRecipeList(results.data))
+      .catch((err) => console.log(err))
+  }, [renderer])
+
   const loader = function() {
-    setRenderer(prev => !prev)
+    setRenderer((prev) => (!prev))
   }
 
   return (
@@ -32,8 +37,8 @@ function App() {
       <Navbar />
       <div className='container'>
         <Routes>
-          <Route path='/' element={<Homepage ingredientsList={ingredientsList}  />} />
-          <Route path='/myrecipes' element={<MyRecipes ingredientsList={ingredientsList}/>} />
+          <Route path='/' element={<Homepage ingredientsList={ingredientsList} loader={loader}  />} />
+          <Route path='/myrecipes' element={<MyRecipes recipeList={recipeList} loader={loader}/>} />
           <Route path='/myingredients' element={<MyIngredients ingredientsList={ingredientsList} loader={loader}/>} />
           <Route path='/browse' element={<BrowseRecipes/>} />
         </Routes>

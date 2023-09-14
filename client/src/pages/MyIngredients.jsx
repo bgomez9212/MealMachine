@@ -19,7 +19,9 @@ function MyIngredients({ ingredientsList, loader }) {
         id: ingredientId
       }
     })
+    .then(() => loader())
   }
+
   return (
     <div className='ingredients-list'>
       <input
