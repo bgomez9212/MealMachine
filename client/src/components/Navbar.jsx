@@ -14,6 +14,8 @@ function Navbar() {
         |
         <Link to='/myingredients'>My Ingredients</Link>
         |
+        <Link to='/mygroceries'>My Grocery List</Link>
+        |
         <Link to='/browse'>Browse</Link>
         </div>
       </div>

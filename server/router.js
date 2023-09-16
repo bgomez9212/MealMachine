@@ -13,4 +13,8 @@ router.delete('/savedIngredients', controller.deleteIngredients)
 router.delete('/savedRecipes', controller.deleteRecipes)
 router.get('/recipesByIngredients', controller.getRecipesByIngredients)
 router.get('/recipe', controller.getRecipe)
+router.get('/groceries', controller.getGroceries)
+router.post('/groceries', controller.addGroceries)
+router.delete('/groceries', controller.deleteGroceries)
+
 module.exports = router;

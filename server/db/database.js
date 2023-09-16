@@ -12,8 +12,14 @@ const ingredientSchema = new mongoose.Schema({
   name: String
 })
 
+const grocerySchema = new mongoose.Schema({
+  name: String
+})
+
 const Recipe = new mongoose.model('Recipe', recipeSchema);
 
 const Ingredient = new mongoose.model('Ingredient', ingredientSchema);
 
-module.exports = {Recipe, Ingredient}
+const Grocery = new mongoose.model('Grocery', grocerySchema)
+
+module.exports = {Recipe, Ingredient, Grocery}

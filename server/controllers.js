@@ -1,11 +1,12 @@
 const axios = require('axios');
 const { API } = process.env
-const { Recipe, Ingredient } = require('./db/database.js')
+const { Recipe, Ingredient, Grocery } = require('./db/database.js')
 
 module.exports = {
   getDinners: (req, res) => {
     // axios.get(`https://api.spoonacular.com/recipes/random?number=6&tags=dinner&apiKey=${API}`)
     //   .then(results => res.status(200).send(results.data.recipes))
+    //   .catch((err) => console.log('unable to get dinners'))
     res.send([
         {
             "id": 715424,
@@ -180,6 +181,7 @@ module.exports = {
   getLunches: (req, res) => {
     // axios.get(`https://api.spoonacular.com/recipes/random?number=6&tags=lunch&apiKey=${API}`)
     //   .then(results => res.status(200).send(results.data.recipes))
+    //   .catch((err) => console.log('unable to get lunches'))
     res.send([
         {
             "id": 782585,
@@ -366,6 +368,7 @@ module.exports = {
   getBreakfast: (req, res) => {
     // axios.get(`https://api.spoonacular.com/recipes/random?number=6&tags=breakfast&apiKey=${API}`)
     //   .then(results => res.status(200).send(results.data.recipes))
+    //   .catch((err) => console.log('unable to get breakfast'))
     res.send([
         {
             "id": 715497,
@@ -551,21 +554,21 @@ module.exports = {
   },
   addRecipe: (req, res) => {
     Recipe.create(req.body.params)
-      .then(() => console.log('created'))
-      .catch((err) => console.log(err))
+      .then(() => console.log('added recipe'))
+      .catch((err) => console.log('unable to add recipe'))
   },
   getSavedRecipes: (req, res) => {
     Recipe
       .find({})
       .exec()
       .then((results) => res.send(results))
-      .catch(() => console.log('there was an error'))
+      .catch(() => console.log('unable to get saved recipes'))
   },
   addIngredients: (req, res) => {
     req.body.params.ingredients.forEach((ingredient) => {
       Ingredient.create({name: ingredient})
-        .then(() => console.log('created'))
-        .catch(() => console.log('there was an error'))
+        .then(() => console.log('added ingredient'))
+        .catch(() => console.log('unable to add ingredient'))
     })
   },
   getIngredients: (req, res) => {
@@ -573,30 +576,31 @@ module.exports = {
       .find({})
       .exec()
       .then((results) => res.send(results))
-      .catch(() => console.log('there was an error'))
+      .catch(() => console.log('unable to get ingredients'))
   },
   deleteIngredients: (req, res) => {
     Ingredient
         .findByIdAndDelete(req.body.id)
         .then(() => res.status(204).send())
-        .catch(() => console.log('unable to delete'))
+        .catch(() => console.log('unable to delete ingredient'))
   },
   deleteRecipes: (req, res) => {
     Recipe
         .deleteOne({id: req.body.id})
         .then(() => res.status(204).send())
-        .catch(() => console.log('unable to delete'))
+        .catch(() => console.log('unable to delete recipe'))
   },
   getRecipesByIngredients: (req, res) => {
-    let queryString = '';
-    if (req.query.ingredients) {
-        req.query.ingredients.forEach((ingredientObj) => {
-            queryString += ingredientObj.name+','
-        })
-    }
-    // axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${API}&ignorePantry=true&ingredients=${queryString}&ranking=1`)
-    //   .then((results) => res.send(results))
-    //   .catch((err) => console.log(err))
+    // let queryString = '';
+    // if (req.query.ingredients) {
+    //     req.query.ingredients.forEach((ingredientObj) => {
+    //         queryString += ingredientObj.name+','
+    //     })
+    // }
+    // axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=433bf1970e46425f867c84140c43fc99&ingredients=potatoes,onions,garlic,&ranking=2&number=12`)
+    // // .then((results) => console.log(results.data))
+    //   .then((results) => res.send(results.data))
+    //   .catch((err) => console.log('unable to get recipes by ingredients'))
     res.send([
         {
             "id": 653810,
@@ -1754,6 +1758,552 @@ module.exports = {
     ])
   },
   getRecipe: (req, res) => {
-    console.log(req.query)
+    console.log(req.query.id)
+    // axios.get(`https://api.spoonacular.com/recipes/${req.query.id}/information?apiKey=${API}`)
+    //   .then((results) => res.send(results))
+    //   .catch((err) => console.log(err))
+    res.send(
+        {
+            "vegetarian": true,
+            "vegan": false,
+            "glutenFree": false,
+            "dairyFree": true,
+            "veryHealthy": false,
+            "cheap": false,
+            "veryPopular": false,
+            "sustainable": false,
+            "lowFodmap": false,
+            "weightWatcherSmartPoints": 4,
+            "gaps": "no",
+            "preparationMinutes": -1,
+            "cookingMinutes": -1,
+            "aggregateLikes": 1,
+            "healthScore": 3,
+            "creditsText": "Foodista.com – The Cooking Encyclopedia Everyone Can Edit",
+            "license": "CC BY 3.0",
+            "sourceName": "Foodista",
+            "pricePerServing": 27.4,
+            "extendedIngredients": [
+                {
+                    "id": 19912,
+                    "aisle": "Ethnic Foods",
+                    "image": "agave.png",
+                    "consistency": "LIQUID",
+                    "name": "agave syrup",
+                    "nameClean": "agave",
+                    "original": "1/2 cup agave syrup",
+                    "originalName": "agave syrup",
+                    "amount": 0.5,
+                    "unit": "cup",
+                    "meta": [],
+                    "measures": {
+                        "us": {
+                            "amount": 0.5,
+                            "unitShort": "cups",
+                            "unitLong": "cups"
+                        },
+                        "metric": {
+                            "amount": 110.0,
+                            "unitShort": "ml",
+                            "unitLong": "milliliters"
+                        }
+                    }
+                },
+                {
+                    "id": 18369,
+                    "aisle": "Baking",
+                    "image": "white-powder.jpg",
+                    "consistency": "SOLID",
+                    "name": "baking powder",
+                    "nameClean": "baking powder",
+                    "original": "2 tablespoons baking powder",
+                    "originalName": "baking powder",
+                    "amount": 2.0,
+                    "unit": "tablespoons",
+                    "meta": [],
+                    "measures": {
+                        "us": {
+                            "amount": 2.0,
+                            "unitShort": "Tbsps",
+                            "unitLong": "Tbsps"
+                        },
+                        "metric": {
+                            "amount": 2.0,
+                            "unitShort": "Tbsps",
+                            "unitLong": "Tbsps"
+                        }
+                    }
+                },
+                {
+                    "id": 9040,
+                    "aisle": "Produce",
+                    "image": "bananas.jpg",
+                    "consistency": "SOLID",
+                    "name": "bananas",
+                    "nameClean": "banana",
+                    "original": "3 bananas, mashed",
+                    "originalName": "bananas, mashed",
+                    "amount": 3.0,
+                    "unit": "",
+                    "meta": [
+                        "mashed"
+                    ],
+                    "measures": {
+                        "us": {
+                            "amount": 3.0,
+                            "unitShort": "",
+                            "unitLong": ""
+                        },
+                        "metric": {
+                            "amount": 3.0,
+                            "unitShort": "",
+                            "unitLong": ""
+                        }
+                    }
+                },
+                {
+                    "id": 1014582,
+                    "aisle": "Oil, Vinegar, Salad Dressing",
+                    "image": "vegetable-oil.jpg",
+                    "consistency": "LIQUID",
+                    "name": "canola oil",
+                    "nameClean": "canola oil",
+                    "original": "2 tablespoons canola oil",
+                    "originalName": "canola oil",
+                    "amount": 2.0,
+                    "unit": "tablespoons",
+                    "meta": [],
+                    "measures": {
+                        "us": {
+                            "amount": 2.0,
+                            "unitShort": "Tbsps",
+                            "unitLong": "Tbsps"
+                        },
+                        "metric": {
+                            "amount": 2.0,
+                            "unitShort": "Tbsps",
+                            "unitLong": "Tbsps"
+                        }
+                    }
+                },
+                {
+                    "id": 1123,
+                    "aisle": "Milk, Eggs, Other Dairy",
+                    "image": "egg.png",
+                    "consistency": "SOLID",
+                    "name": "eggs",
+                    "nameClean": "egg",
+                    "original": "2 eggs",
+                    "originalName": "eggs",
+                    "amount": 2.0,
+                    "unit": "",
+                    "meta": [],
+                    "measures": {
+                        "us": {
+                            "amount": 2.0,
+                            "unitShort": "",
+                            "unitLong": ""
+                        },
+                        "metric": {
+                            "amount": 2.0,
+                            "unitShort": "",
+                            "unitLong": ""
+                        }
+                    }
+                },
+                {
+                    "id": 19334,
+                    "aisle": "Baking",
+                    "image": "dark-brown-sugar.png",
+                    "consistency": "SOLID",
+                    "name": "brown sugar",
+                    "nameClean": "golden brown sugar",
+                    "original": "7.5 teaspoons light brown sugar",
+                    "originalName": "light brown sugar",
+                    "amount": 7.5,
+                    "unit": "teaspoons",
+                    "meta": [
+                        "light"
+                    ],
+                    "measures": {
+                        "us": {
+                            "amount": 7.5,
+                            "unitShort": "tsps",
+                            "unitLong": "teaspoons"
+                        },
+                        "metric": {
+                            "amount": 7.5,
+                            "unitShort": "tsps",
+                            "unitLong": "teaspoons"
+                        }
+                    }
+                },
+                {
+                    "id": 19334,
+                    "aisle": "Baking",
+                    "image": "light-brown-sugar.jpg",
+                    "consistency": "SOLID",
+                    "name": "brown sugar",
+                    "nameClean": "golden brown sugar",
+                    "original": "7.5 teaspoons light brown sugar",
+                    "originalName": "light brown sugar",
+                    "amount": 7.5,
+                    "unit": "teaspoons",
+                    "meta": [
+                        "light"
+                    ],
+                    "measures": {
+                        "us": {
+                            "amount": 7.5,
+                            "unitShort": "tsps",
+                            "unitLong": "teaspoons"
+                        },
+                        "metric": {
+                            "amount": 7.5,
+                            "unitShort": "tsps",
+                            "unitLong": "teaspoons"
+                        }
+                    }
+                },
+                {
+                    "id": 9200,
+                    "aisle": "Produce",
+                    "image": "orange.png",
+                    "consistency": "SOLID",
+                    "name": "oranges",
+                    "nameClean": "orange",
+                    "original": "2 oranges",
+                    "originalName": "oranges",
+                    "amount": 2.0,
+                    "unit": "",
+                    "meta": [],
+                    "measures": {
+                        "us": {
+                            "amount": 2.0,
+                            "unitShort": "",
+                            "unitLong": ""
+                        },
+                        "metric": {
+                            "amount": 2.0,
+                            "unitShort": "",
+                            "unitLong": ""
+                        }
+                    }
+                },
+                {
+                    "id": 12151,
+                    "aisle": "Savory Snacks",
+                    "image": "pistachios.jpg",
+                    "consistency": "SOLID",
+                    "name": "pistachios",
+                    "nameClean": "pistachio nuts",
+                    "original": "1/4 cup chopped pistachios",
+                    "originalName": "chopped pistachios",
+                    "amount": 0.25,
+                    "unit": "cup",
+                    "meta": [
+                        "chopped"
+                    ],
+                    "measures": {
+                        "us": {
+                            "amount": 0.25,
+                            "unitShort": "cups",
+                            "unitLong": "cups"
+                        },
+                        "metric": {
+                            "amount": 30.75,
+                            "unitShort": "g",
+                            "unitLong": "grams"
+                        }
+                    }
+                },
+                {
+                    "id": 8402,
+                    "aisle": "Cereal",
+                    "image": "rolled-oats.jpg",
+                    "consistency": "SOLID",
+                    "name": "cooking oats",
+                    "nameClean": "quick cooking oats",
+                    "original": "2 cups quick cooking oats",
+                    "originalName": "quick cooking oats",
+                    "amount": 2.0,
+                    "unit": "cups",
+                    "meta": [
+                        "quick"
+                    ],
+                    "measures": {
+                        "us": {
+                            "amount": 2.0,
+                            "unitShort": "cups",
+                            "unitLong": "cups"
+                        },
+                        "metric": {
+                            "amount": 162.162,
+                            "unitShort": "g",
+                            "unitLong": "grams"
+                        }
+                    }
+                },
+                {
+                    "id": 2047,
+                    "aisle": "Spices and Seasonings",
+                    "image": "salt.jpg",
+                    "consistency": "SOLID",
+                    "name": "salt",
+                    "nameClean": "table salt",
+                    "original": "1/2 teaspoon salt",
+                    "originalName": "salt",
+                    "amount": 0.5,
+                    "unit": "teaspoon",
+                    "meta": [],
+                    "measures": {
+                        "us": {
+                            "amount": 0.5,
+                            "unitShort": "tsps",
+                            "unitLong": "teaspoons"
+                        },
+                        "metric": {
+                            "amount": 0.5,
+                            "unitShort": "tsps",
+                            "unitLong": "teaspoons"
+                        }
+                    }
+                },
+                {
+                    "id": 20080,
+                    "aisle": "Baking",
+                    "image": "flour.png",
+                    "consistency": "SOLID",
+                    "name": "flour",
+                    "nameClean": "whole wheat flour",
+                    "original": "1 cup whole wheat flour",
+                    "originalName": "whole wheat flour",
+                    "amount": 1.0,
+                    "unit": "cup",
+                    "meta": [
+                        "whole wheat"
+                    ],
+                    "measures": {
+                        "us": {
+                            "amount": 1.0,
+                            "unitShort": "cup",
+                            "unitLong": "cup"
+                        },
+                        "metric": {
+                            "amount": 120.0,
+                            "unitShort": "g",
+                            "unitLong": "grams"
+                        }
+                    }
+                }
+            ],
+            "id": 653810,
+            "title": "Orange Banana Muffins With Pistachios",
+            "readyInMinutes": 45,
+            "servings": 15,
+            "sourceUrl": "http://www.foodista.com/recipe/76KVJW23/orange-banana-muffins-with-pistachios",
+            "image": "https://spoonacular.com/recipeImages/653810-556x370.jpg",
+            "imageType": "jpg",
+            "summary": "The recipe Orange Banana Muffins With Pistachios can be made <b>in around 45 minutes</b>. For <b>27 cents per serving</b>, you get a breakfast that serves 15. Watching your figure? This dairy free and lacto ovo vegetarian recipe has <b>164 calories</b>, <b>4g of protein</b>, and <b>4g of fat</b> per serving. It is brought to you by Foodista. 1 person were impressed by this recipe. If you have canolan oil, baking powder, cooking oats, and a few other ingredients on hand, you can make it. Taking all factors into account, this recipe <b>earns a spoonacular score of 35%</b>, which is rather bad. Try <a href=\"https://spoonacular.com/recipes/banana-orange-muffins-125470\">Bananan Orange Muffins</a>, <a href=\"https://spoonacular.com/recipes/banana-orange-pecan-muffins-125360\">Banana, Orange & Pecan Muffins</a>, and <a href=\"https://spoonacular.com/recipes/orange-tart-with-orange-cream-and-pistachios-135879\">Orange Tart with Orange Cream and Pistachios</a> for similar recipes.",
+            "cuisines": [],
+            "dishTypes": [
+                "morning meal",
+                "brunch",
+                "breakfast"
+            ],
+            "diets": [
+                "dairy free",
+                "lacto ovo vegetarian"
+            ],
+            "occasions": [],
+            "winePairing": {
+                "pairedWines": [],
+                "pairingText": "",
+                "productMatches": []
+            },
+            "instructions": "<ol><li>Preheat oven to 180C. Line muffin tin.</li><li>Combine mashed banana, orange peel from 2 oranges, 1/2 cup freshly squeezed orange juice from the oranges, eggs, oil and agave in a bowl an mix well. In another bowl, mix oats with flour, salt and baking powder. Pour dry mixture into wet mixture and stir until just combined. Fill batter into muffin tin.</li><li>Put half a teaspoon of the brown sugar on each muffin and sprinkle chopped pistachios on top. Bake for about 20 minutes or until a toothpick comes out clean.</li></ol>",
+            "analyzedInstructions": [
+                {
+                    "name": "",
+                    "steps": [
+                        {
+                            "number": 1,
+                            "step": "Preheat oven to 180C. Line muffin tin.",
+                            "ingredients": [],
+                            "equipment": [
+                                {
+                                    "id": 404671,
+                                    "name": "muffin tray",
+                                    "localizedName": "muffin tray",
+                                    "image": "muffin-tray.jpg"
+                                },
+                                {
+                                    "id": 404784,
+                                    "name": "oven",
+                                    "localizedName": "oven",
+                                    "image": "oven.jpg",
+                                    "temperature": {
+                                        "number": 180.0,
+                                        "unit": "Celsius"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "number": 2,
+                            "step": "Combine mashed banana, orange peel from 2 oranges, 1/2 cup freshly squeezed orange juice from the oranges, eggs, oil and agave in a bowl an mix well. In another bowl, mix oats with flour, salt and baking powder.",
+                            "ingredients": [
+                                {
+                                    "id": 18369,
+                                    "name": "baking powder",
+                                    "localizedName": "baking powder",
+                                    "image": "white-powder.jpg"
+                                },
+                                {
+                                    "id": 1009040,
+                                    "name": "mashed banana",
+                                    "localizedName": "mashed banana",
+                                    "image": "bananas.jpg"
+                                },
+                                {
+                                    "id": 9206,
+                                    "name": "orange juice",
+                                    "localizedName": "orange juice",
+                                    "image": "orange-juice.jpg"
+                                },
+                                {
+                                    "id": 9216,
+                                    "name": "orange zest",
+                                    "localizedName": "orange zest",
+                                    "image": "orange-zest.png"
+                                },
+                                {
+                                    "id": 9200,
+                                    "name": "orange",
+                                    "localizedName": "orange",
+                                    "image": "orange.png"
+                                },
+                                {
+                                    "id": 19912,
+                                    "name": "agave",
+                                    "localizedName": "agave",
+                                    "image": "agave.png"
+                                },
+                                {
+                                    "id": 20081,
+                                    "name": "all purpose flour",
+                                    "localizedName": "all purpose flour",
+                                    "image": "flour.png"
+                                },
+                                {
+                                    "id": 1123,
+                                    "name": "egg",
+                                    "localizedName": "egg",
+                                    "image": "egg.png"
+                                },
+                                {
+                                    "id": 8120,
+                                    "name": "oats",
+                                    "localizedName": "oats",
+                                    "image": "rolled-oats.jpg"
+                                },
+                                {
+                                    "id": 2047,
+                                    "name": "salt",
+                                    "localizedName": "salt",
+                                    "image": "salt.jpg"
+                                },
+                                {
+                                    "id": 4582,
+                                    "name": "cooking oil",
+                                    "localizedName": "cooking oil",
+                                    "image": "vegetable-oil.jpg"
+                                }
+                            ],
+                            "equipment": [
+                                {
+                                    "id": 404783,
+                                    "name": "bowl",
+                                    "localizedName": "bowl",
+                                    "image": "bowl.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "number": 3,
+                            "step": "Pour dry mixture into wet mixture and stir until just combined. Fill batter into muffin tin.Put half a teaspoon of the brown sugar on each muffin and sprinkle chopped pistachios on top.",
+                            "ingredients": [
+                                {
+                                    "id": 19334,
+                                    "name": "brown sugar",
+                                    "localizedName": "brown sugar",
+                                    "image": "dark-brown-sugar.png"
+                                },
+                                {
+                                    "id": 12151,
+                                    "name": "pistachio nuts",
+                                    "localizedName": "pistachio nuts",
+                                    "image": "pistachios.jpg"
+                                }
+                            ],
+                            "equipment": [
+                                {
+                                    "id": 404671,
+                                    "name": "muffin tray",
+                                    "localizedName": "muffin tray",
+                                    "image": "muffin-tray.jpg"
+                                }
+                            ]
+                        },
+                        {
+                            "number": 4,
+                            "step": "Bake for about 20 minutes or until a toothpick comes out clean.",
+                            "ingredients": [],
+                            "equipment": [
+                                {
+                                    "id": 404644,
+                                    "name": "toothpicks",
+                                    "localizedName": "toothpicks",
+                                    "image": "toothpicks.jpg"
+                                },
+                                {
+                                    "id": 404784,
+                                    "name": "oven",
+                                    "localizedName": "oven",
+                                    "image": "oven.jpg"
+                                }
+                            ],
+                            "length": {
+                                "number": 20,
+                                "unit": "minutes"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "originalId": null,
+            "spoonacularSourceUrl": "https://spoonacular.com/orange-banana-muffins-with-pistachios-653810"
+        }
+    )
+  },
+  addGroceries: (req, res) => {
+    req.body.params.groceries.forEach((grocery) => {
+      Grocery.create({name: grocery})
+        .then(() => console.log('added grocery'))
+        .catch(() => console.log('unable to add grocery'))
+    })
+  },
+  getGroceries: (req, res) => {
+    Grocery
+      .find({})
+      .exec()
+      .then((results) => res.send(results))
+      .catch(() => console.log('unable to fetch groceries'))
+  },
+  deleteGroceries: (req, res) => {
+    Grocery
+        .findByIdAndDelete(req.body.id)
+        .then(() => res.status(204).send())
+        .catch(() => console.log('unable to delete ingredient'))
   }
 }
